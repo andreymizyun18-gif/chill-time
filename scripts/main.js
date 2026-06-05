@@ -13,9 +13,9 @@ const members = [
   },
   {
     name: "Sally_lil",
-    avatar: "ava/logo.jpg",
-    bio: "",
-    tags: [],
+    avatar: "ava/salli_lil.png",
+    bio: "Заслуженный альпинист России",
+    tags: ["Луксмакс", "Скалалазанье", "Альпинизм"],
   },
   {
     name: "Sugar_Nc",
