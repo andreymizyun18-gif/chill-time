@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chill Time</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sacramento&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            font-family: 'Nunito', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Единое розовое свечение на весь сайт */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 90% 60% at 50% 0%, rgba(255, 20, 147, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse 70% 50% at 50% 100%, rgba(255, 0, 170, 0.10) 0%, transparent 55%),
+                radial-gradient(ellipse 50% 40% at 80% 50%, rgba(255, 20, 147, 0.06) 0%, transparent 50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow: 0 0 4px #ff00aa, 0 0 11px #ff00aa, 0 0 19px #ff00aa, 0 0 40px #ff1493, 0 0 80px #ff1493;
+                opacity: 1;
+            }
+            20%, 24%, 55% { text-shadow: none; opacity: 0.85; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.4); }
+        }
+
+        .stars {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px; height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 4s infinite ease-in-out;
+        }
+
+        .hero {
+            position: relative;
+            z-index: 2;
+            padding: 80px 20px 40px;
+            text-align: center;
+        }
+
+        .logo {
+            font-family: 'Sacramento', cursive;
+            font-size: 4.5rem;
+            color: #fff;
+            animation: flicker 3s infinite alternate;
+            margin-bottom: 12px;
+        }
+
+        .tagline {
+            font-weight: 300;
+            font-size: 1rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.6);
+            text-shadow: 0 0 10px rgba(255,255,255,0.2);
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Sacramento', cursive;
+            font-size: 2.5rem;
+            color: #ff00aa;
+            text-shadow: 0 0 20px #ff00aa;
+            margin: 20px 0 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .member-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 20px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-card:hover {
+            border-color: rgba(255, 0, 170, 0.4);
+            box-shadow: 0 0 30px rgba(255, 0, 170, 0.15), inset 0 0 20px rgba(255, 0, 170, 0.05);
+            transform: translateY(-4px);
+        }
+
+        .member-card:nth-child(1) { animation-delay: 0.05s; }
+        .member-card:nth-child(2) { animation-delay: 0.1s; }
+        .member-card:nth-child(3) { animation-delay: 0.15s; }
+        .member-card:nth-child(4) { animation-delay: 0.2s; }
+        .member-card:nth-child(5) { animation-delay: 0.25s; }
+        .member-card:nth-child(6) { animation-delay: 0.3s; }
+        .member-card:nth-child(7) { animation-delay: 0.35s; }
+        .member-card:nth-child(8) { animation-delay: 0.4s; }
+        .member-card:nth-child(9) { animation-delay: 0.45s; }
+        .member-card:nth-child(10) { animation-delay: 0.5s; }
+        .member-card:nth-child(11) { animation-delay: 0.55s; }
+        .member-card:nth-child(12) { animation-delay: 0.6s; }
+        .member-card:nth-child(13) { animation-delay: 0.65s; }
+
+        .member-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255,255,255,0.15);
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+
+        .member-card:hover .member-avatar {
+            border-color: #ff00aa;
+            box-shadow: 0 0 20px rgba(255, 0, 170, 0.3);
+        }
+
+        .member-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #fff;
+            word-break: break-word;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: #111;
+            border: 1px solid rgba(255, 0, 170, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 60px rgba(255, 0, 170, 0.2);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ff00aa;
+            box-shadow: 0 0 30px rgba(255, 0, 170, 0.4);
+            margin-bottom: 15px;
+        }
+
+        .modal-name {
+            font-family: 'Sacramento', cursive;
+            font-size: 2.2rem;
+            color: #ff00aa;
+            text-shadow: 0 0 15px #ff00aa;
+            margin-bottom: 5px;
+        }
+
+        .modal-placeholder {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .modal-close {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.6);
+            padding: 8px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            border-color: #ff00aa;
+            color: #ff00aa;
+            box-shadow: 0 0 15px rgba(255, 0, 170, 0.2);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255,255,255,0.2);
+            font-size: 0.85rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-heart {
+            color: #ff00aa;
+            text-shadow: 0 0 10px #ff00aa;
+        }
+
+        @media (max-width: 500px) {
+            .team-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 0 14px 40px; }
+            .member-avatar { width: 55px; height: 55px; }
+            .member-name { font-size: 0.85rem; }
+            .logo { font-size: 3.5rem; }
+            .hero { padding: 60px 20px 30px; }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <div class="stars" id="stars"></div>
+
+    <section class="hero">
+        <div class="logo">Chill Time</div>
+        <div class="tagline">Место, где можно просто быть</div>
+    </section>
+
+    <div class="section-title">Наши</div>
+
+    <div class="team-grid" id="teamGrid"></div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modal">
+            <img class="modal-avatar" id="modalAvatar" src="" alt="">
+            <div class="modal-name" id="modalName"></div>
+            <div class="modal-placeholder" id="modalPlaceholder"></div>
+            <button class="modal-close" onclick="closeModal()">Закрыть</button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        Сделано с <span class="footer-heart">♥</span> для Chill Time
+    </footer>
+
+    <script>
+        const members = [
+            { name: "imson1909", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=imson1909&backgroundColor=b6e3f4" },
+            { name: "Vlados_NC", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Vlados_NC&backgroundColor=c0aede" },
+            { name: "Sally_lil", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sally_lil&backgroundColor=ffdfbf" },
+            { name: "Sugar_Nc", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sugar_Nc&backgroundColor=d1d4f9" },
+            { name: "Мария", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Maria&backgroundColor=ffd5dc" },
+            { name: "What_clown", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=What_clown&backgroundColor=b6e3f4" },
+            { name: "Karobka123", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Karobka123&backgroundColor=c0aede" },
+            { name: "Pawopapa", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Pawopapa&backgroundColor=ffdfbf" },
+            { name: "kumiifr", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=kumiifr&backgroundColor=d1d4f9" },
+            { name: "bismarck234", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=bismarck234&backgroundColor=ffd5dc" },
+            { name: "magSvarki", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=magSvarki&backgroundColor=b6e3f4" },
+            { name: "stuckagainnk", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=stuckagainnk&backgroundColor=c0aede" }
+        ];
+
+        const grid = document.getElementById('teamGrid');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalAvatar = document.getElementById('modalAvatar');
+        const modalName = document.getElementById('modalName');
+        const modalPlaceholder = document.getElementById('modalPlaceholder');
+
+        members.forEach((m, i) => {
+            const card = document.createElement('div');
+            card.className = 'member-card';
+            card.onclick = () => openModal(i);
+            card.innerHTML = `
+                <img class="member-avatar" src="${m.avatar}" alt="${m.name}">
+                <div class="member-name">${m.name}</div>
+            `;
+            grid.appendChild(card);
+        });
+
+        function openModal(i) {
+            const m = members[i];
+            modalAvatar.src = m.avatar;
+            modalName.textContent = m.name;
+            modalPlaceholder.textContent = "Здесь каждый заполняет свой профиль сам ✨";
+            modalOverlay.classList.add('active');
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+        }
+
+        modalOverlay.onclick = (e) => {
+            if (e.target === modalOverlay) closeModal();
+        };
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 80; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 4 + 's';
+            star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
+            starsContainer.appendChild(star);
+        }
+    </script>
+
+</body>
+</html>
