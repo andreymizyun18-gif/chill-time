@@ -19,7 +19,7 @@ const members = [
   },
   {
     name: "Sugar_Nc",
-    avatar: "ava/logo.jpg",
+    avatar: "ava/sugar_nc.png",
     bio: "",
     tags: [],
   },
