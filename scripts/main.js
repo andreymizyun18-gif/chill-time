@@ -14,8 +14,8 @@ const members = [
   {
     name: "Sally_lil",
     avatar: "ava/logo.jpg",
-    bio: "",
-    tags: [],
+    bio: "Знаю сюжет более 100 произведений",
+    tags: ["Сценарист", "Любитель книг"],
   },
   {
     name: "Sugar_Nc",
