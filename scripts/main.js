@@ -14,14 +14,14 @@ const members = [
   {
     name: "Sally_lil",
     avatar: "ava/logo.jpg",
-    bio: "Знаю сюжет более 100 произведений",
-    tags: ["Сценарист", "Любитель книг"],
+    bio: "",
+    tags: [],
   },
   {
     name: "Sugar_Nc",
     avatar: "ava/sugar_nc.png",
-    bio: "",
-    tags: [],
+    bio: "Знаю сюжет более 100 произведений",
+    tags: ["Сценарист", "Любитель книг"],
   },
   {
     name: "Мария",
