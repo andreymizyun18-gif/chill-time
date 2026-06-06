@@ -50,8 +50,8 @@ const members = [
   {
     name: "kumiifr",
     avatar: "ava/logo.jpg",
-    bio: "",
-    tags: [],
+    bio: "Создатель, glamour girl, пикми",
+    tags: ["Вредина", "Задрот в бабл квас", "Дизайнер"],
   },
   {
     name: "bismarck234",
