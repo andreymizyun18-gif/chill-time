@@ -49,7 +49,7 @@ const members = [
   },
   {
     name: "kumiifr",
-    avatar: "ava/kumiifr.png",
+    avatar: "ava/kumiifr.PNG",
     bio: "Создатель, glamour girl, пикми",
     tags: ["Вредина", "Задрот в бабл квас", "Дизайнер"],
   },
